@@ -1,38 +1,32 @@
 import classes from './auth-page.module.css';
 import { Card, Divider } from "antd";
-import { useState } from "react";
-import { LoginForm } from "../../components/login-form/login-form";
-import { RegisterForm } from '../../components/register-form/register-form';
+import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 const tabList = [
   {
-    key: 'SignUp',
+    key: '/auth/register',
     tab: 'Sign Up',
   },
   {
-    key: 'SignIn',
+    key: '/auth/login',
     tab: 'Sign In',
   },
 ];
 
 export const AuthPage: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<string>('SignIn');
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const contentList: Record<string, React.ReactNode> = {
-    SignIn: <LoginForm />,
-    SignUp: <RegisterForm onSubmit={setActiveTab}/>,
-  };
-
-  const onTabChange = (key: string) => {
-    setActiveTab(key);
-  };
+  if(['/auth/', '/auth'].includes(location.pathname)) {
+    return <Navigate to='/auth/login' replace/>;
+  }
 
   return (
     <div className={classes.container}>
       <div className={classes.logo}>
-        <img src='pokemon-logo.png' alt='Pokemon logo'/>
+        <img src='/pokemon-logo.png' alt='Pokemon logo'/>
         <Divider type="vertical" style={{height: '54px'}}/>
-        <img src='clicker-logo.png' alt='Clicker logo'/>
+        <img src='/clicker-logo.png' alt='Clicker logo'/>
       </div>
       <Card
         style={{
@@ -40,11 +34,11 @@ export const AuthPage: React.FC = () => {
           boxShadow: "5px 8px 24px 5px rgba(58, 58, 58, 0.1)"
         }}
         tabList={tabList}
-        activeTabKey={activeTab}
-        onTabChange={onTabChange}
+        activeTabKey={location.pathname}
+        onTabChange={(key) => navigate(key)}
         tabProps={{ centered: true }}
       >
-        {contentList[activeTab]}
+        <Outlet />
       </Card>
     </div>
   );

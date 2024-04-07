@@ -1,23 +1,23 @@
 import { Input, Button, Form} from "antd";
 import { UserData, useRegisterMutation } from "../../services/user-service";
-import { FC, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { isError } from "../../utils/typeguards";
 
-interface RegisterFormProps {
-  onSubmit: (nextTab: string) => void;
-}
 
-export const RegisterForm: FC<RegisterFormProps> = ({ onSubmit }) => {
-  const [register, { data, isLoading }] = useRegisterMutation();
+
+export const RegisterForm = () => {
+  const [register, {isLoading }] = useRegisterMutation();
+  const navigate = useNavigate();
 
   const handleSubmitClick = (userData: UserData) => {
-      register(userData);
-  };
+      register(userData).then((res) => {
+        if(isError(res)) {
+          return null;
+        }
 
-  useEffect(() => {
-    if(data) {
-      onSubmit('SignIn');
-    }
-  }, [data, onSubmit]);
+        navigate('/auth/login');
+      } );
+  };
 
   return (
     <Form
