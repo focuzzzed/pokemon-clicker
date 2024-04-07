@@ -1,17 +1,28 @@
 import { Input, Button, Form} from "antd";
 import { UserData, useRegisterMutation } from "../../services/user-service";
+import { useNavigate } from "react-router-dom";
+import { isError } from "../../utils/typeguards";
+
+
 
 export const RegisterForm = () => {
-  const [register, { isLoading }] = useRegisterMutation();
+  const [register, {isLoading }] = useRegisterMutation();
+  const navigate = useNavigate();
 
-  const onFinish = (userData: UserData) => {
-    register(userData)
+  const handleSubmitClick = (userData: UserData) => {
+      register(userData).then((res) => {
+        if(isError(res)) {
+          return null;
+        }
+
+        navigate('/auth/login');
+      } );
   };
 
   return (
     <Form
       className="register-form"
-      onFinish={onFinish}
+      onFinish={handleSubmitClick}
       layout="vertical"
     >
       <Form.Item
@@ -36,7 +47,7 @@ export const RegisterForm = () => {
       </Form.Item>
       <Form.Item
         label="Confirm Password"
-        name="passwordConfirmation"
+        name="Confirm"
         dependencies={['password']}
         rules={[{ required: true,},
           ({ getFieldValue }) => ({
