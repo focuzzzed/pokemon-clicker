@@ -1,17 +1,28 @@
 import { Input, Button, Form} from "antd";
 import { UserData, useRegisterMutation } from "../../services/user-service";
+import { FC, useEffect } from "react";
 
-export const RegisterForm = () => {
-  const [register, { isLoading }] = useRegisterMutation();
+interface RegisterFormProps {
+  onSubmit: (nextTab: string) => void;
+}
 
-  const onFinish = (userData: UserData) => {
-    register(userData)
+export const RegisterForm: FC<RegisterFormProps> = ({ onSubmit }) => {
+  const [register, { data, isLoading }] = useRegisterMutation();
+
+  const handleSubmitClick = (userData: UserData) => {
+      register(userData);
   };
+
+  useEffect(() => {
+    if(data) {
+      onSubmit('SignIn');
+    }
+  }, [data, onSubmit]);
 
   return (
     <Form
       className="register-form"
-      onFinish={onFinish}
+      onFinish={handleSubmitClick}
       layout="vertical"
     >
       <Form.Item
@@ -36,7 +47,7 @@ export const RegisterForm = () => {
       </Form.Item>
       <Form.Item
         label="Confirm Password"
-        name="passwordConfirmation"
+        name="Confirm"
         dependencies={['password']}
         rules={[{ required: true,},
           ({ getFieldValue }) => ({

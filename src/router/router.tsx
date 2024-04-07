@@ -1,11 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
-import { LoginPage } from "../pages/login-page/login-page";
+import { AuthPage } from "../pages/auth-page/auth-page";
 import { ErrorPage } from "../pages/error-page/error-page";
 
 export const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <LoginPage />,
-    errorElement: <ErrorPage />
-  },
+  { path: '/', element: <AuthPage /> },
+  { path: '*', element: <ErrorPage /> }
 ]);

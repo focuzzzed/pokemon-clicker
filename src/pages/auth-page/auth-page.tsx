@@ -1,4 +1,4 @@
-import classes from './login-page.module.css';
+import classes from './auth-page.module.css';
 import { Card, Divider } from "antd";
 import { useState } from "react";
 import { LoginForm } from "../../components/login-form/login-form";
@@ -15,13 +15,14 @@ const tabList = [
   },
 ];
 
-const contentList: Record<string, React.ReactNode> = {
-  SignIn: <LoginForm />,
-  SignUp: <RegisterForm/>,
-};
-
-export const LoginPage: React.FC = () => {
+export const AuthPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>('SignIn');
+
+  const contentList: Record<string, React.ReactNode> = {
+    SignIn: <LoginForm />,
+    SignUp: <RegisterForm onSubmit={setActiveTab}/>,
+  };
+
   const onTabChange = (key: string) => {
     setActiveTab(key);
   };

@@ -6,13 +6,13 @@ import { useEffect } from "react";
 export const LoginForm = () => {
   const [login, { data, isLoading }] = useLoginMutation();
 
-  const onFinish = (userData: UserData) => {
+  const handleSubmitClick = (userData: UserData) => {
     login(userData)
   };
 
   useEffect(() => {
     if (data) {
-      const {accessToken} = data;
+      const { accessToken } = data;
       Token.save(accessToken);
     }
   }, [data])
@@ -20,7 +20,7 @@ export const LoginForm = () => {
   return (
     <Form
       className="login-form"
-      onFinish={onFinish}
+      onFinish={handleSubmitClick}
       layout="vertical"
     >
       <Form.Item
