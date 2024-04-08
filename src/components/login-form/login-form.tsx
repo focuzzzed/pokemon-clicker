@@ -1,13 +1,13 @@
-import { Input, Button, Form } from "antd";
-import { UserData, useLoginMutation } from "../../services/user-service";
-import { Token } from "../../utils/token";
-import { useEffect } from "react";
+import { Input, Button, Form } from 'antd';
+import { useEffect } from 'react';
+import { UserData, useLoginMutation } from '../../services/user-service';
+import { Token } from '../../utils/token';
 
-export const LoginForm = () => {
+export function LoginForm() {
   const [login, { data, isLoading }] = useLoginMutation();
 
   const handleSubmitClick = (userData: UserData) => {
-    login(userData)
+    login(userData);
   };
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export const LoginForm = () => {
       const { accessToken } = data;
       Token.save(accessToken);
     }
-  }, [data])
+  }, [data]);
 
   return (
     <Form
@@ -48,7 +48,7 @@ export const LoginForm = () => {
         <Button
           loading={isLoading}
           type="primary"
-          block={true}
+          block
           htmlType="submit"
           className="login-form-button"
           style={{

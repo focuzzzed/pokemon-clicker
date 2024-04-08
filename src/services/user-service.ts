@@ -25,7 +25,7 @@ export const userAPI = createApi({
           ...loginData,
           username: loginData.login,
         },
-      })
+      }),
     }),
     register: build.mutation<UserData, UserData>({
       query: (registerData) => ({
@@ -34,12 +34,11 @@ export const userAPI = createApi({
         body: {
           email: registerData.login,
           password: registerData.password,
-          username: registerData.login
+          username: registerData.login,
         },
-      })
-    })
-  })
-})
+      }),
+    }),
+  }),
+});
 
-
-export const {useRegisterMutation, useLoginMutation} = userAPI
+export const { useRegisterMutation, useLoginMutation } = userAPI;

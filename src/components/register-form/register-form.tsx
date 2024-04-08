@@ -1,22 +1,20 @@
-import { Input, Button, Form} from "antd";
-import { UserData, useRegisterMutation } from "../../services/user-service";
-import { useNavigate } from "react-router-dom";
-import { isError } from "../../utils/typeguards";
+import { Input, Button, Form } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { UserData, useRegisterMutation } from '../../services/user-service';
+import { isError } from '../../utils/typeguards';
 
-
-
-export const RegisterForm = () => {
-  const [register, {isLoading }] = useRegisterMutation();
+export function RegisterForm() {
+  const [register, { isLoading }] = useRegisterMutation();
   const navigate = useNavigate();
 
   const handleSubmitClick = (userData: UserData) => {
-      register(userData).then((res) => {
-        if(isError(res)) {
-          return null;
-        }
+    register(userData).then((res): void => {
+      if (isError(res)) {
+        return;
+      }
 
-        navigate('/auth/login');
-      } );
+      navigate('/auth/login');
+    });
   };
 
   return (
@@ -49,7 +47,7 @@ export const RegisterForm = () => {
         label="Confirm Password"
         name="Confirm"
         dependencies={['password']}
-        rules={[{ required: true,},
+        rules={[{ required: true },
           ({ getFieldValue }) => ({
             validator(_, value: string) {
               if (!value || getFieldValue('password') === value) {
@@ -70,7 +68,7 @@ export const RegisterForm = () => {
         <Button
           loading={isLoading}
           type="primary"
-          block={true}
+          block
           htmlType="submit"
           className="login-form-button"
           style={{
