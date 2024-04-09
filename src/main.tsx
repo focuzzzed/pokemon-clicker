@@ -4,6 +4,8 @@ import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import { createStore } from './store/store';
 import { router } from './router/router';
+import './main.css';
+import { STATE_LOCALSTORAGE_KEY } from './const';
 
 const root = document.getElementById('root');
 
@@ -14,6 +16,10 @@ if (!root) {
 const container = createRoot(root);
 
 const store = createStore();
+
+window.addEventListener('unload', () => {
+  localStorage.setItem(STATE_LOCALSTORAGE_KEY, JSON.stringify(store.getState()));
+});
 
 container.render(
   <StrictMode>

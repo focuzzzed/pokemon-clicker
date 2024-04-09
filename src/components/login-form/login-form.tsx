@@ -2,9 +2,12 @@ import { Input, Button, Form } from 'antd';
 import { useEffect } from 'react';
 import { UserData, useLoginMutation } from '../../services/user-service';
 import { Token } from '../../utils/token';
+import { useAppDispatch } from '../../hooks/redux';
+import { authorizeUser } from '../../store/user-process/user-process';
 
 export function LoginForm() {
   const [login, { data, isLoading }] = useLoginMutation();
+  const dispatch = useAppDispatch();
 
   const handleSubmitClick = (userData: UserData) => {
     login(userData);
@@ -14,8 +17,9 @@ export function LoginForm() {
     if (data) {
       const { accessToken } = data;
       Token.save(accessToken);
+      dispatch(authorizeUser(Token.get()));
     }
-  }, [data]);
+  }, [data, dispatch]);
 
   return (
     <Form

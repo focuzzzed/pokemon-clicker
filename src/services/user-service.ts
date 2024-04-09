@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { BACKEND_URL, HttpMethod } from '../const';
+import { BACKEND_USER_URL, HttpMethod } from '../const';
 
 export interface UserData {
+  username?: string,
   login: string,
   password: string,
 }
@@ -13,7 +14,7 @@ export interface ResponseWithJWT {
 export const userAPI = createApi({
   reducerPath: 'userAPI',
   baseQuery: fetchBaseQuery({
-    baseUrl: BACKEND_URL,
+    baseUrl: BACKEND_USER_URL,
   }),
   tagTypes: ['User'],
   endpoints: (build) => ({
