@@ -1,8 +1,9 @@
-import { Card, Divider } from 'antd';
+import { Card } from 'antd';
 import {
   Navigate, Outlet, useLocation, useNavigate,
 } from 'react-router-dom';
 import classes from './auth-page.module.css';
+import { Logo } from '../../components/logo/logo';
 
 const tabList = [
   {
@@ -26,9 +27,7 @@ export function AuthPage() {
   return (
     <div className={classes.container}>
       <div className={classes.logo}>
-        <img src="/pokemon-logo.png" alt="Pokemon logo" />
-        <Divider type="vertical" style={{ height: '54px' }} />
-        <img src="/clicker-logo.png" alt="Clicker logo" />
+        <Logo />
       </div>
       <Card
         style={{
